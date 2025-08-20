@@ -16,6 +16,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import "./adminDashboard.css";
+import DocumentHistoryTable from "../../components/tabela.jsx";
+import { fetchDocuments } from "../dashboard/documentsApi.js"
 
 export default function AdminDashboard() {
   const [metrics, setMetrics] = useState({
@@ -26,6 +28,7 @@ export default function AdminDashboard() {
   });
   const [mostEditedDocs, setMostEditedDocs] = useState([]);
   const [mostActiveUsers, setMostActiveUsers] = useState([]);
+  const [documents, setDocuments] = useState([]);
 
   useEffect(() => {
     loadMetrics();
@@ -53,10 +56,27 @@ export default function AdminDashboard() {
 
       const users = await fetchMostActiveUsers(); // [{ username, actions }]
       setMostActiveUsers(users);
+      const allDocuments = await fetchDocuments(); // Pega todos os documentos
+      setDocuments(allDocuments); // Armazena os documentos no estado
     } catch (err) {
       console.error("Erro ao carregar métricas:", err);
     }
   }
+
+
+  // Colunas que você quer mostrar na tabela
+  const columns = [
+    { key: "title", title: "Título" },
+    { key: "lastEdited", title: "Última edição" },
+    { key: "username", title: "Usuário" },
+  ];
+
+  const tableData = documents.map(doc => ({
+  title: doc.title,
+  lastEdited: new Date(doc.updatedAt).toLocaleString(), // opcional: formata a data
+  username: doc.owner ?? "Sem dono",
+}));
+
   return (
     <div className="dashboard-container">
       <h1>Admin Dashboard</h1>
@@ -108,6 +128,21 @@ export default function AdminDashboard() {
           </ResponsiveContainer>
         </div>
       </div>
+
+      {/* Tabela de histórico de documentos */}
+      <div className="dashboard-table-wrapper">
+        <h3>Documentos Recentes</h3>
+        {documents?.length > 0 && (
+          <DocumentHistoryTable
+            columns={columns}
+            data={tableData}
+            itemsPerPage={5}
+          />
+        )}
+      </div>
+
+
+
     </div>
   );
 }

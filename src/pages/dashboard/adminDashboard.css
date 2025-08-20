@@ -1,13 +1,15 @@
 .dashboard-container {
-  padding: 1rem 2rem; /* apenas o necessário */
+  padding: 1rem 2rem; 
   background: #f5f8ff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 0.2px 0.3px rgba(0,0,0,0.03);
   min-height: 100vh;
+  overflow-y: auto; 
+  
 }
 
 .dashboard-container h1 {
   font-size: 2rem;
-  margin: 0; /* colado no topo do container */
+  margin: 0; 
   color: #4a90e2;
   padding: 15px;
 }
@@ -50,20 +52,36 @@
 
 .dashboard-charts-wrapper {
   display: flex;
-  gap: 1rem; /* espaço entre os gráficos */
-  flex-wrap: wrap; /* para responsividade, quebra linha se necessário */
+  gap: 1rem; 
+  flex-wrap: wrap; 
 }
 
 .dashboard-chart {
-  flex: 1; /* ocupa espaço igual */
-  min-width: 300px; /* opcional, evita que fique muito pequeno em telas pequenas */
+  flex: 1; 
+  min-width: 300px; 
   background: #fff;
   padding: 1rem;
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  box-shadow: 0 0.2px 0.5px rgba(0,0,0,0.02);
 }
 .dashboard-chart h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: #333;
+  color: #4a90e2;
+}
+
+.dashboard-table-wrapper {
+  background: #81f1b9;
+  padding: 0;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  max-height: 200px; /* altura máxima antes do scroll */
+  overflow-y: auto; 
+}
+
+.dashboard-table-wrapper h3 {
+  font-size: 2rem;
+  margin: 0; 
+  color: #fff;
+  padding: 15px;
 }

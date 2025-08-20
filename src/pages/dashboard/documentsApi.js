@@ -6,11 +6,19 @@ export async function fetchDocuments() {
     const response = await axios.get("http://localhost:3000/documents", {
       headers: { Authorization: `Bearer ${token}` }
     });
-    return response.data;
-  } catch {
+    console.log(response.data);
+    return response.data.map(doc => ({
+      title: doc.title,
+      updatedAt: doc.updatedAt,
+      owner: doc.owner ? doc.owner.username : null,
+    }));
+  } catch (err) {
+    console.error("Erro ao buscar documentos:", err);
     return [];
   }
 }
+
+
 
 export async function fetchDocumentsByUser() {
   const token = localStorage.getItem("token");

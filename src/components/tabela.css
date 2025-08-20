@@ -10,7 +10,7 @@
 
 /* Container principal */
 .history-page {
-    padding: 2em;
+    padding: 0.1rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--surface);
     min-height: 100vh;
@@ -39,7 +39,7 @@
 }
 
 .back-btn:hover {
-    background: #003d99;
+    background: #36b37e;
 }
 
 /* Lista de documentos */
@@ -71,9 +71,9 @@
 
 /* Container do histórico */
 .document-history {
-    margin-top: 2em;
+    margin-top: 10px;
     background: #fff;
-    padding: 1.5em;
+    padding: 0.5rm;
     border-radius: 10px;
     box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
 }
@@ -88,9 +88,9 @@
 
 .documents-table th,
 .documents-table td {
-    border: 1px solid #ddd;
-    padding: 0.75em 1em;
-    text-align: left;
+    border: 0.5px solid #ddd;
+    padding: 0.5rem;
+    text-align: center;
 }
 
 .documents-table th {

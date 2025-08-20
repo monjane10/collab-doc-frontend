@@ -9,7 +9,7 @@ export async function fetchTotalDocuments() {
     const response = await axios.get(`${API_BASE}/documents/count`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log("Total de documentos:", response.data.count);
+    console.log("Total de documentos:", response.data.totalDocuments);
     return response.data.totalDocuments;
   } catch (err) {
     console.error("Erro ao buscar total de documentos:", err);
@@ -66,7 +66,7 @@ export async function fetchMostEditedDocs() {
     const response = await axios.get(`${API_BASE}/documents/most-edited`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    return response.data.count;
+    return response.data;
   } catch (err) {
     console.error("Erro ao buscar documentos mais editados:", err);
     return [];
