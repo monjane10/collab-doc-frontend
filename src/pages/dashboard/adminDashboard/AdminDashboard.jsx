@@ -6,10 +6,10 @@ import {
   fetchTotalRevisions,
   fetchTotalUsers,
   fetchTotalDocuments,
-} from "./metricsApi";
+} from "../metricsApi.js";
 import "./adminDashboard.css";
-import DocumentHistoryTable from "../../components/tabela.jsx";
-import { fetchDocuments } from "../dashboard/documentsApi.js"
+import DocumentHistoryTable from "../../../components/table/tabela.jsx";
+import { fetchDocuments } from "../documentsApi.js"
 
 export default function AdminDashboard() {
   const [metrics, setMetrics] = useState({

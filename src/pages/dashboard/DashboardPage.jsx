@@ -1,6 +1,6 @@
 // DashboardPage.jsx
 import React from "react";
-import UserDashboard from "./UserDashboard";
+import UserDashboard from "../UserDashboard";
 import AdminDashboard from "./AdminDashboard";
 
 export default function DashboardPage() {
