@@ -1,0 +1,62 @@
+.profile-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: var(--surface);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 12px var(--shadow);
+}
+
+.profile-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+}
+
+.profile-message {
+  text-align: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  background: #f5f8ff;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.profile-form label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.profile-form input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-top: 0.3rem;
+}
+
+.profile-form input:disabled {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.profile-form button {
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.profile-form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

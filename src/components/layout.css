@@ -1,0 +1,221 @@
+/* Container principal (sidebar + conteúdo) */
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+  background: var(--secondary);
+}
+
+/* Sidebar lateral (desktop padrão) */
+.layout-sidebar {
+  width: 240px;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  box-shadow: 2px 0 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+/* Área de conteúdo à direita */
+.layout-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Topbar com avatar no canto direito */
+.layout-topbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  background: var(--surface);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 900;
+}
+
+/* Avatar */
+.avatar-wrapper {
+  position: relative;
+}
+
+.layout-avatar {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Dropdown */
+.avatar-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  min-width: 200px;
+  padding: 0.5rem;
+  z-index: 1000;
+}
+.avatar-info {
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+.avatar-info strong {
+  display: block;
+  font-size: 1rem;
+  color: var(--primary);
+}
+.avatar-info small {
+  font-size: 0.85rem;
+  color: #666;
+}
+.avatar-menu button {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0.6rem;
+  text-align: left;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.avatar-menu button:hover {
+  background: #f5f8ff;
+}
+.layout-main {
+  flex: 1;
+  padding: 0; /* remove padding interno */
+  margin: 0;
+  background: var(--surface);
+  border-radius: 0; /* remove arredondamento se quiser colar no topo */
+  box-shadow: 0 0 0 rgba(0,0,0,0); /* remove sombra pesada */
+  overflow: visible; /* deixa conteúdo expandir normalmente */
+}
+
+/* ====== Responsividade ====== */
+@media (max-width: 768px) {
+  /* Sidebar vira drawer */
+  .layout-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transform: translateX(-100%);
+    z-index: 1000;
+  }
+  .layout-sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Botão de abrir menu */
+  .sidebar-toggle {
+    display: block;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 1100;
+  }
+
+  /* Conteúdo ocupa tela inteira */
+  .layout-content {
+    margin-left: 0;
+  }
+
+  .layout-main {
+    margin: 1rem;
+    padding: 1rem;
+  }
+}
+
+/* Desktop mantém sidebar fixa */
+@media (min-width: 769px) {
+  .sidebar-toggle {
+    display: none;
+  }
+}
+/* Links do sidebar */
+.layout-sidebar .layout-link {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  color: #fff; /* branco */
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+  gap: 0.5rem;
+  display: flex;
+}
+
+.layout-sidebar .layout-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.layout-sidebar .layout-link.active {
+  background: rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+.layout-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+/* Nome do sistema na topbar */
+.system-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-right: 1.5rem;
+  white-space: nowrap;
+}
+
+/* Wrapper da pesquisa */
+.search-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-right: 1.5rem;
+}
+
+/* Input da pesquisa */
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+}

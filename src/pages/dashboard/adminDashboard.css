@@ -1,0 +1,69 @@
+.dashboard-container {
+  padding: 1rem 2rem; /* apenas o necessário */
+  background: #f5f8ff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  min-height: 100vh;
+}
+
+.dashboard-container h1 {
+  font-size: 2rem;
+  margin: 0; /* colado no topo do container */
+  color: #4a90e2;
+  padding: 15px;
+}
+
+/* Cards de métricas */
+.dashboard-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.metric-card h2 {
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+}
+.metric-card p {
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* Cores */
+.metric-card.blue { background: #4a90e2; }
+.metric-card.blue-light { background: #79b8ff; }
+.metric-card.green { background: #50e3c2; }
+.metric-card.green-light { background: #81f1b9; }
+
+.dashboard-charts-wrapper {
+  display: flex;
+  gap: 1rem; /* espaço entre os gráficos */
+  flex-wrap: wrap; /* para responsividade, quebra linha se necessário */
+}
+
+.dashboard-chart {
+  flex: 1; /* ocupa espaço igual */
+  min-width: 300px; /* opcional, evita que fique muito pequeno em telas pequenas */
+  background: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.dashboard-chart h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}

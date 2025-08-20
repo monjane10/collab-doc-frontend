@@ -1,0 +1,208 @@
+:root {
+  --primary: #0052cc;
+  --secondary: #edf2fa;
+  --surface: #f7f9fb;
+  --text: #222;
+  --accent: #36b37e;
+  --border-radius: 12px;
+  --transition-speed: 0.25s;
+  --red: #ff4d4f;
+}
+
+/* ===== Body / Dashboard Background ===== */
+.dashboard-bg {
+  min-height: 100vh;
+  background: var(--secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== Dashboard Header ===== */
+.dashboard-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* h2 centralizado */
+  gap: 1rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.dashboard-header h2 {
+  font-size: 20rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-align: center;
+}
+
+.back-btn {
+  position: absolute;
+  left: 0;
+  background: transparent;
+  border: none;
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--transition-speed);
+}
+
+.dashboard-header span {
+  font-size: 2rem;
+  color: var(--primary);
+}
+.dashboard-title {
+  color: var(--primary);
+  font-size: 2rem; /* ajustado para 16px */
+  font-weight: 600;
+  padding: 1em 0;
+  text-align: center; /* centraliza horizontalmente */
+}
+
+
+
+.back-btn:hover {
+  color: var(--accent);
+}
+
+/* ===== Dashboard Cards ===== */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  margin-bottom: 3rem;
+}
+
+.dashboard-card {
+  background: #fff;
+  border: 2px solid var(--primary);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 2rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-speed);
+  cursor: pointer;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+.dashboard-card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-card-desc {
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+}
+
+/* ===== Document Table ===== */
+.documents-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 12px;
+  margin-top: 1rem;
+}
+
+.documents-table thead {
+  background-color: #f0f0f0;
+}
+
+.documents-table th {
+  padding: 10px 8px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 0.95rem;
+}
+
+.documents-table tbody tr {
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.documents-table tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.2px 0.6px rgba(0,0,0,0.1);
+}
+
+.documents-table td {
+  padding: 20px 16px;
+  color: #555555;
+  font-size: 1rem;
+}
+
+/* Bordas arredondadas para células */
+.documents-table tbody tr td:first-child {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
+
+.documents-table tbody tr td:last-child {
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+}
+
+.documents-table td .btn-group {
+  display: flex;
+  gap: 16px; /* espaço entre os botões */
+}
+
+.documents-table .btn-edit
+{
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color var(--transition-speed), transform 0.2s ease;
+  gap: 1rem;
+}
+.documents-table .btn-delete {
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--red);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color var(--transition-speed), transform 0.2s ease;
+  gap: 1rem;
+} 
+
+.documents-table .btn-edit:hover,
+.documents-table .btn-delete:hover {
+  background-color: var(--accent);
+  transform: scale(1.05);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .documents-table th,
+  .documents-table td {
+    padding: 12px 8px;
+    font-size: 0.85rem;
+  }
+}

@@ -1,0 +1,16 @@
+
+/* Cores principais do sistema */
+:root {
+  --primary: #0052cc;
+  --secondary: #edf2fa;
+  --surface: #f7f9fb;
+  --text: #222;
+  --accent: #36b37e;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  background: var(--secondary);
+  color: var(--text);
+}
