@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "./tabela.css";
 
-export default function DocumentHistoryTable({ columns, data, itemsPerPage = 5 }) {
+export default function DocumentHistoryTable({title, columns, data, itemsPerPage = 5 }) {
   const [currentPage, setCurrentPage] = useState(1);
 
   // Resetar página sempre que os dados mudarem
@@ -22,6 +22,8 @@ export default function DocumentHistoryTable({ columns, data, itemsPerPage = 5 }
 
   return (
     <div className="document-history">
+         {/* Título opcional */}
+      <h2 className="table-title">{title}</h2>
       <table className="documents-table">
         <thead>
           <tr>

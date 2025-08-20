@@ -66,6 +66,7 @@ export async function fetchMostEditedDocs() {
     const response = await axios.get(`${API_BASE}/documents/most-edited`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    console.log("Documentos mais editados:", response.data);
     return response.data;
   } catch (err) {
     console.error("Erro ao buscar documentos mais editados:", err);
@@ -80,7 +81,8 @@ export async function fetchMostActiveUsers() {
     const response = await axios.get(`${API_BASE}/users/most-active`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    return response.data.count;
+    console.log("Usuários mais activos:", response.data);
+    return response.data
   } catch (err) {
     console.error("Erro ao buscar usuários mais ativos:", err);
     return [];

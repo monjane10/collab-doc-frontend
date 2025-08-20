@@ -7,14 +7,6 @@ import {
   fetchTotalUsers,
   fetchTotalDocuments,
 } from "./metricsApi";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
 import "./adminDashboard.css";
 import DocumentHistoryTable from "../../components/tabela.jsx";
 import { fetchDocuments } from "../dashboard/documentsApi.js"
@@ -51,13 +43,27 @@ export default function AdminDashboard() {
         totalPermissions,
       });
 
-      const docs = await fetchMostEditedDocs(); // [{ title, edits }]
-      setMostEditedDocs(docs);
+      // Carrega documentos mais editados
+      const docs = await fetchMostEditedDocs();
+      const mappedDocs = docs.map(d => ({
+        title: d.title ?? "Sem título",
+        edits: d.editCount ?? 0
+      }));
+      setMostEditedDocs(mappedDocs);
 
-      const users = await fetchMostActiveUsers(); // [{ username, actions }]
-      setMostActiveUsers(users);
-      const allDocuments = await fetchDocuments(); // Pega todos os documentos
-      setDocuments(allDocuments); // Armazena os documentos no estado
+      const users = await fetchMostActiveUsers();
+      const mappedUsers = users.map(u => ({
+        username: u.username ?? "Sem nome",
+        createdDocs: u.createdDocs ?? 0,
+        editedDocs: u.editedDocs ?? 0,
+        totalActions: u.totalActions ?? 0
+      }));
+      setMostActiveUsers(mappedUsers);
+
+      // Carrega todos os documentos
+      const allDocuments = await fetchDocuments();
+      setDocuments(allDocuments);
+
     } catch (err) {
       console.error("Erro ao carregar métricas:", err);
     }
@@ -72,10 +78,10 @@ export default function AdminDashboard() {
   ];
 
   const tableData = documents.map(doc => ({
-  title: doc.title,
-  lastEdited: new Date(doc.updatedAt).toLocaleString(), // opcional: formata a data
-  username: doc.owner ?? "Sem dono",
-}));
+    title: doc.title,
+    lastEdited: new Date(doc.updatedAt).toLocaleString(), // opcional: formata a data
+    username: doc.owner ?? "Sem dono",
+  }));
 
   return (
     <div className="dashboard-container">
@@ -102,44 +108,72 @@ export default function AdminDashboard() {
       </div>
 
       <div className="dashboard-charts-wrapper">
-        {/* Gráfico de documentos mais editados */}
-        <div className="dashboard-chart">
-          <h3>Documentos mais editados</h3>
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={mostEditedDocs} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
-              <XAxis dataKey="title" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="edits" fill="#4a90e2" />
-            </BarChart>
-          </ResponsiveContainer>
+        {/* Tabela de Documentos Mais Editados */}
+        <div className="dashboard-table-wrapper">
+          <h3>Documentos Mais Editados</h3>
+          {mostEditedDocs?.length > 0 ? (
+            <table className="documents-table">
+              <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Edições</th>
+                </tr>
+              </thead>
+              <tbody>
+                {mostEditedDocs.map((doc, index) => (
+                  <tr key={index}>
+                    <td>{doc.title}</td>
+                    <td>{doc.edits}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div>Nenhum documento encontrado.</div>
+          )}
         </div>
-
-        {/* Gráfico de utilizadores mais ativos */}
-        <div className="dashboard-chart">
-          <h3>Utilizadores mais ativos</h3>
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={mostActiveUsers} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
-              <XAxis dataKey="username" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="actions" fill="#50e3c2" />
-            </BarChart>
-          </ResponsiveContainer>
+        <div className="dashboard-table-wrapper">
+          <h3>Utilizadores Mais Activos</h3>
+          {mostActiveUsers?.length > 0 ? (
+            <table className="documents-table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Documentos criados</th>
+                  <th> Documentos Actualizados</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {mostActiveUsers.map((user, index) => (
+                  <tr key={index}>
+                    <td>{user.username}</td>
+                    <td>{user.createdDocs}</td>
+                    <td>{user.editedDocs}</td>
+                    <td>{user.totalActions}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div>Nenhum documento encontrado.</div>
+          )}
         </div>
       </div>
-
       {/* Tabela de histórico de documentos */}
       <div className="dashboard-table-wrapper">
-        <h3>Documentos Recentes</h3>
         {documents?.length > 0 && (
           <DocumentHistoryTable
+            title="Histórico de Documentos"
             columns={columns}
             data={tableData}
             itemsPerPage={5}
           />
         )}
       </div>
+
+
+
 
 
 
