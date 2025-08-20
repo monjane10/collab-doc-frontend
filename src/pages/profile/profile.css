@@ -1,10 +1,10 @@
 .profile-container {
-  max-width: 500px;
+  max-width: 1080px;
   margin: 2rem auto;
   background: var(--surface);
   padding: 2rem;
   border-radius: var(--border-radius);
-  box-shadow: 0 2px 12px var(--shadow);
+  box-shadow: 0 0.2px 0.3px var(--shadow);
 }
 
 .profile-container h2 {

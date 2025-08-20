@@ -9,67 +9,73 @@
 }
 
 /* Container principal */
-.history-page  {
-    padding: 2em;
+.history-page {
+    padding: 2rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--surface);
+    background-color: var(--secondary);
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
 }
 
-/* Cabeçalho do dashboard com botão de voltar alinhado */
+/* Cabeçalho */
 .dashboard-title {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 1em;
-    margin-bottom: 2em;
     color: var(--primary);
-    font-size: 1em;
+    font-size: 1.5em;
     font-weight: 600;
 }
 
-
 .dashboard-content h2 {
-  font-size: 2em;
+    font-size: 1.8em;
+    padding: 15px;
     color: var(--primary);
     text-align: center;
+    margin-bottom: 1.5em;
 }
 
+/* Botão voltar */
 .back-btn {
     background: var(--primary);
     color: #fff;
     border: none;
-    padding: 0.5em 1em;
-    border-radius: 6px;
+    padding: 0.6em 1.2em;
+    border-radius: 30px;
     cursor: pointer;
     transition: background 0.2s;
-    font-size: 0.9em;
-    display: block;       /* transforma em bloco para funcionar o margin auto */
-    margin: 0 auto;       /* centraliza horizontalmente */
+    font-size: 0.95em;
+    display: block;
+    margin: 0 auto;
+    font-weight: 600;
 }
 
 .back-btn:hover {
     background: var(--accent);
-    color: #fff;
-
 }
 
-/* Lista de documentos */
+/* Lista de documentos (como chips Gmail) */
 .document-list {
     list-style: none;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5em;
+    gap: 0.7em;
+    justify-content: center;
 }
 
 .document-list li button {
     background: #fff;
     border: 1px solid var(--primary);
-    padding: 0.5em 1em;
-    border-radius: 6px;
+    padding: 0.6em 1.2em;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s;
     font-weight: 500;
+    font-size: 0.95em;
     color: var(--primary);
 }
 
@@ -77,24 +83,26 @@
 .document-list li button.active {
     background: var(--primary);
     color: #fff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
-/* Container do histórico */
+/* Container do histórico (card Gmail) */
 .document-history {
-    margin-top: 2em;
     background: #fff;
-    padding: 1.5em;
-    border-radius: 10px;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+    padding: 2em;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    margin-top: 1.5em;
 }
+
 .document-history h3 {
-      font-size: 2em;
+    font-size: 1.5em;
     color: var(--primary);
+    margin-bottom: 1em;
     text-align: center;
 }
 
-/* Tabela de histórico */
+/* Tabela estilo Gmail */
 .documents-table {
     width: 100%;
     border-collapse: collapse;
@@ -104,23 +112,22 @@
 
 .documents-table th,
 .documents-table td {
-    border: 1px solid #ddd;
-    padding: 0.75em 1em;
+    padding: 0.9em 1em;
     text-align: left;
+    border-bottom: 1px solid #eee;
 }
 
 .documents-table th {
-    background-color: var(--primary)22;
+    background-color: var(--surface);
     color: var(--primary);
     font-weight: 600;
-}
-
-.documents-table tr:nth-child(even) {
-    background-color: var(--secondary);
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .documents-table tr:hover {
-    background-color: #e6f0ff;
+    background-color: #f1f6ff;
 }
 
 /* Mensagens de estado */
@@ -128,6 +135,7 @@
     color: var(--muted);
     font-style: italic;
     margin-top: 1em;
+    text-align: center;
 }
 
 /* Paginação */
@@ -136,27 +144,30 @@
     justify-content: center;
     align-items: center;
     gap: 1em;
-    margin-top: 1.5em;
+    margin-top: 2em;
 }
 
 .pagination button {
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    padding: 0.4em 0.8em;
-    border-radius: 6px;
+    background: #fff;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 0.5em 1em;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 0.9em;
-    transition: background 0.2s;
+    transition: all 0.2s;
 }
 
 .pagination button:disabled {
-    background: #ccc;
+    border-color: #ccc;
+    color: #aaa;
+    background: #f9f9f9;
     cursor: not-allowed;
 }
 
 .pagination button:hover:not(:disabled) {
-    background: #003d99;
+    background: var(--primary);
+    color: #fff;
 }
 
 .pagination span {
@@ -169,7 +180,7 @@
     .documents-table th,
     .documents-table td {
         font-size: 0.85em;
-        padding: 0.5em;
+        padding: 0.6em;
     }
 
     .document-list {
@@ -178,7 +189,8 @@
     }
 
     .dashboard-title {
-        flex-direction: row; /* botão e título juntos */
-        font-size: 1.2em;
+        flex-direction: column;
+        font-size: 1rem;
+        text-align: center;
     }
 }
