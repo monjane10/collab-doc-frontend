@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png";
 import axios from "axios";
 
 export default function LoginPage() {
@@ -38,7 +39,10 @@ export default function LoginPage() {
   return (
     <div className="auth-bg">
       <div className="auth-container">
+          <div className="auth-header">
+        <img src={logo} alt="Logo ColabDoc" className="auth-logo" />
         <h1 className="auth-title">ColabDoc</h1>
+      </div>
         <form className="auth-form" onSubmit={handleSubmit}>
           <input type="email" placeholder="Email" className="auth-input" value={email} onChange={e => setEmail(e.target.value)} required />
           <input type="password" placeholder="Senha" className="auth-input" value={password} onChange={e => setPassword(e.target.value)} required />

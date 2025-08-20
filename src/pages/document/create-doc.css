@@ -6,51 +6,233 @@
   --accent: #36b37e;
 }
 
-/* Container principal da criação */
-.create-doc-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 1rem 2rem;
+/* Container principal */
+.documents-container {
+  max-width: 1000px;
+  margin: 0.5rem auto;
+  padding: 0.5rem 0;
   background: var(--surface);
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  border-radius: 12px;
+  box-shadow: 0 0.2px 0.3px rgba(0,0,0,0.03);
+  position: relative;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Cabeçalho: botao voltar + título */
-.create-doc-header {
+/* Cabeçalho */
+.documents-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5rem;
+}
+
+.documents-header h2 {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+/* Botão novo documento */
+.btn-new {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 1rem 3rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0.2px 0.3px rgba(0,0,0,0.6);
+  transition: all 0.3s;
+}
+
+.btn-new:hover {
+  background: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* Tabela estilo Gmail */
+.documents-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0.2px 0.8px rgba(0,0,0,0.05);
+}
+
+.documents-table th,
+.documents-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 0.5px solid #e0e0e0;
+}
+
+.documents-table th {
+  background: var(--secondary);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.documents-table tbody tr {
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.documents-table tbody tr:hover {
+  background: rgba(0,82,204,0.05);
+}
+
+/* Botões da tabela */
+.btn-group {
+  display: flex;
+  gap: 0.5rem; /* espaçamento entre os botões */
+}
+.btn-edit,
+.btn-delete {
+  margin-right: 1rem;
+  padding: 1rem 1rem;
+  border-radius: 5px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.btn-edit {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-edit:hover {
+  background: var(--accent);
+  transform: translateY(-1px);
+}
+
+.btn-delete {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.btn-delete:hover {
+  background: #c0392b;
+  transform: translateY(-1px);
+}
+
+/* Overlay do card de novo documento */
+.new-doc-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
   display: flex;
   align-items: center;
-  justify-content: center; /* centraliza o título */
-  gap: 1rem;
-  margin-bottom: 2rem;
-  position: relative; /* permite posicionar o botão voltar próximo */
+  justify-content: center;
+  z-index: 999;
 }
 
-.back-btn {
-  position: absolute;
-  left: 0; /* sempre à esquerda do container */
-  background: transparent;
+/* Card estilo Gmail/Modal clean */
+.new-doc-card {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 480px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.new-doc-card input,
+.new-doc-card textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  border: 1px solid #dbeafe;
+  font-size: 0.95rem;
+  background: #f8fafc;
+  transition: all 0.2s;
+}
+
+.new-doc-card input:focus,
+.new-doc-card textarea:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+/* Botão de criar dentro do card */
+.new-doc-card button {
+  background: var(--primary);
+  color: #fff;
   border: none;
-  color: var(--primary);
-  font-size: 1rem;
+  border-radius: 24px;
+  padding: 0.6rem 1.5rem;
   font-weight: 600;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: all 0.3s;
 }
 
-.back-btn:hover {
-  color: var(--accent);
+.new-doc-card button:hover {
+  background: var(--accent);
+  transform: translateY(-1px);
 }
 
-.create-doc-container h2 {
+/* Botão fechar card */
+.btn-close-card {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.btn-close-card:hover {
   color: var(--primary);
-  font-size: 1.8rem;
-  font-weight: 600;
-  text-align: center;
-  margin: 0; /* remove margem extra */
 }
 
-/* Formulário de criação */
+/* Overlay do card */
+.dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4); /* escurece o fundo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Card de criação */
+.dialog-box {
+  background: var(--surface);
+  padding: 2rem;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  position: relative;
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Título do card */
+.dialog-box h3 {
+  color: var(--primary);
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Formulário */
 .create-doc-form {
   display: flex;
   flex-direction: column;
@@ -58,7 +240,6 @@
 }
 
 .create-doc-form label {
-  display: block;
   font-weight: 500;
   color: var(--text);
 }
@@ -66,11 +247,11 @@
 .create-doc-form input,
 .create-doc-form textarea {
   width: 100%;
-  padding: 0.6rem;
+  padding: 0.6rem 0.8rem;
   border-radius: 10px;
   border: 1px solid #dbeafe;
-  font-size: 1rem;
   background: #f8fafc;
+  font-size: 1rem;
   transition: border 0.2s;
 }
 
@@ -81,71 +262,23 @@
 }
 
 .create-doc-form textarea {
-  min-height: 80px;
+  min-height: 100px;
   resize: vertical;
-}
-
-/* Botão de criar */
-.create-doc-form button {
-  background: var(--primary);
-  color: #fff;
-  font-weight: 700;
-  border: none;
-  border-radius: 12px;
-  padding: 0.8rem 1.4rem;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-}
-
-.create-doc-form button:hover:not(:disabled) {
-  background: var(--accent);
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.16);
-}
-
-.create-doc-form button:disabled {
-  background: #b6c2d6;
-  cursor: not-allowed;
 }
 
 /* Mensagem de erro */
 .error-msg {
   color: #e74c3c;
-  font-size: 0.98rem;
+  font-size: 0.95rem;
+  margin-top: -0.5rem;
 }
 
-/* Diálogo */
-.dialog-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
-
-.dialog-box {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 16px;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  text-align: center;
-}
-
+/* Ações do card (botões) */
 .dialog-actions {
-  margin-top: 1.5rem;
   display: flex;
   justify-content: center;
   gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 .btn-confirm {
@@ -154,24 +287,44 @@
   padding: 0.6rem 1.2rem;
   border-radius: 10px;
   font-weight: 600;
-  transition: 0.3s;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
-.btn-confirm:hover {
+.btn-confirm:hover:not(:disabled) {
   background: var(--accent);
   transform: translateY(-2px);
 }
 
+.btn-confirm:disabled {
+  background: #b6c2d6;
+  cursor: not-allowed;
+}
+
 .btn-cancel {
-  background: #ccc;
-  color: #222;
+  background: #e74c3c;
+  color: var(--text);
   padding: 0.6rem 1.2rem;
   border-radius: 10px;
   font-weight: 600;
-  transition: 0.3s;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
 .btn-cancel:hover {
-  background: #999;
+  background: red;
   transform: translateY(-2px);
 }
+
+/* Animação do card */
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+

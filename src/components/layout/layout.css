@@ -17,6 +17,11 @@
   transition: transform 0.3s ease;
 }
 
+.auth-logo {
+  width: 60px;
+  height: 60px;
+}
+
 /* Área de conteúdo à direita */
 .layout-content {
   flex: 1;
@@ -160,12 +165,13 @@
 /* Links do sidebar */
 .layout-sidebar .layout-link {
   display: block;
-  padding: 0.75rem 1.5rem;
+  padding: 1rem 1.5rem;
   color: #fff; /* branco */
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1.1rem;
   transition: background 0.2s, color 0.2s;
-  gap: 0.5rem;
+  gap: 0.8rem;
   display: flex;
 }
 

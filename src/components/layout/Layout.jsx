@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png";
 import "./layout.css";
 
 function getInitials(name) {
@@ -40,13 +41,42 @@ export default function Layout() {
 
       {/* Sidebar */}
       <aside className={`layout-sidebar ${openSidebar ? "open" : ""}`}>
-        <span className="layout-title">Doc_Collab</span>
+        <div className="auth-header">
+          <img src={logo} alt="Logo ColabDoc" className="auth-logo" />
+          <h1 className="layout-title">
+            {user?.role === "admin" ? "Admin" : "User"}
+          </h1>
+        </div>
         <nav className="layout-nav">
-          <Link to="/dashboard" className="layout-link" onClick={() => setOpenSidebar(false)}>Dashboard</Link>
-          <Link to="/editor/new" className="layout-link" onClick={() => setOpenSidebar(false)}>Novo</Link>
-          <Link to="/history/1" className="layout-link" onClick={() => setOpenSidebar(false)}>Histórico</Link>
+          <Link
+            to="/dashboard"
+            className="layout-link"
+            onClick={() => setOpenSidebar(false)}
+          >
+            Dashboard
+          </Link>
+          <Link
+            to="/editor/new"
+            className="layout-link"
+            onClick={() => setOpenSidebar(false)}
+          >
+            Meus documentos
+          </Link>
+          <Link
+            to="/history/1"
+            className="layout-link"
+            onClick={() => setOpenSidebar(false)}
+          >
+            Histórico
+          </Link>
           {user?.role === "admin" && (
-            <Link to="/users" className="layout-link" onClick={() => setOpenSidebar(false)}>Utilizadores</Link>
+            <Link
+              to="/users"
+              className="layout-link"
+              onClick={() => setOpenSidebar(false)}
+            >
+              Utilizadores
+            </Link>
           )}
         </nav>
       </aside>
@@ -56,7 +86,9 @@ export default function Layout() {
         {/* Topbar */}
         <header className="layout-topbar">
           {/* Nome do sistema */}
-          <h1 className="system-title">Sistema de Edição colaborativa de documentos</h1>
+          <h1 className="system-title">
+            Sistema de Edição colaborativa de documentos
+          </h1>
 
           {/* Barra de pesquisa */}
           <div className="search-wrapper">
@@ -81,7 +113,9 @@ export default function Layout() {
                   <strong>{user?.username}</strong>
                   <small>{user?.email}</small>
                 </div>
-                <button onClick={() => navigate("/profile")}>Editar Perfil</button>
+                <button onClick={() => navigate("/profile")}>
+                  Editar Perfil
+                </button>
                 <button onClick={handleLogout}>Sair</button>
               </div>
             )}
