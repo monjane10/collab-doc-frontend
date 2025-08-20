@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./users.css";
-import DocumentHistoryTable from "../../components/tabela.jsx"; // Ajuste o caminho conforme necessário
+import DocumentHistoryTable from "../../components/table/tabela.jsx"; // Ajuste o caminho conforme necessário
 
 export default function UsersPage() {
   const [users, setUsers] = useState([]);

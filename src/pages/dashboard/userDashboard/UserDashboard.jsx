@@ -1,9 +1,8 @@
 // UserDashboard.jsx
 import React, { useState } from "react";
-import { deleteDocumentById, fetchDocumentsByUser } from "./documentsApi";
+import { deleteDocumentById, fetchDocumentsByUser } from "../../../api/documentsApi.js";
 import { useNavigate } from "react-router-dom";
-import "./dashboard.css";
-import DocumentHistoryTable from "../../components/tabela.jsx"; // Ajuste o caminho conforme necessário
+import DocumentHistoryTable from "../../../components/table/tabela.jsx"; // Ajuste o caminho conforme necessário
 
 export default function UserDashboard() {
     const navigate = useNavigate();

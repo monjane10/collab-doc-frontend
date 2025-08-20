@@ -2,14 +2,14 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Layout from "./components/Layout.jsx";
+import Layout from "./components/layout/Layout.jsx";
 
 
 import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/RegisterPage";
 import DashboardPage from "./pages/dashboard/DashboardPage";
 import EditorPage from "./pages/editor/EditorPage";
-import CreateDocumentPage from "./pages/editor/CreateDocumentPage";
+import CreateDocumentPage from "./pages/document/CreateDocumentPage.jsx";
 import History from "./pages/history/HistoryPage";
 import UsersPage from "./pages/users/UsersPage";
 import ProfilePage from "./pages/profile/profile.jsx";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { fetchDocumentsByUser, fetchHistoryByUser } from "../dashboard/documentsApi.js";
+import { fetchDocumentsByUser, fetchHistoryByUser } from "../../api/documentsApi.js";
 import "./history.css";
-import DocumentHistoryTable from "../../components/tabela.jsx";
+import DocumentHistoryTable from "../../components/table/tabela.jsx";
 
 export default function HistoryPage() {
     const [documents, setDocuments] = useState([]);
