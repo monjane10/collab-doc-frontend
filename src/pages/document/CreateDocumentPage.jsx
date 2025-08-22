@@ -10,6 +10,7 @@ export default function DocumentsPage() {
   const [collaborators, setCollaborators] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     fetchDocuments();
@@ -18,7 +19,7 @@ export default function DocumentsPage() {
   async function fetchDocuments() {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("https://collab-docs-zn2l.onrender.com/documents", {
+      const res = await axios.get( `https://collab-docs-zn2l.onrender.com/documents/user/${user.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDocuments(res.data);
