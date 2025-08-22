@@ -1,173 +1,184 @@
-// UserDashboard.jsx
-import React, { useState } from "react";
-import { deleteDocumentById, fetchDocumentsByUser } from "../../../api/documentsApi.js";
-import { useNavigate } from "react-router-dom";
-import DocumentHistoryTable from "../../../components/table/tabela.jsx"; // Ajuste o caminho conforme necessário
+import React, { useState, useEffect } from "react";
+import {
+  fetchMostActiveUsers,
+  fetchMostEditedDocs,
+  fetchTotalPermissions,
+  fetchTotalRevisions,
+  fetchTotalUsers,
+  fetchTotalDocuments,
+} from "../../../api/metricsApi.js";
+import "./userDashboard.css";
+import DocumentHistoryTable from "../../../components/table/tabela.jsx";
+import { fetchDocuments } from "../../../api/documentsApi.js"
 
 export default function UserDashboard() {
-    const navigate = useNavigate();
-    const [showDocs, setShowDocs] = useState(false);
-    const [documents, setDocuments] = useState([]);
-    const [deleteDialog, setDeleteDialog] = useState({ open: false, docId: null });
+  const [metrics, setMetrics] = useState({
+    totalDocs: 0,
+    totalUsers: 0,
+    totalRevisions: 0,
+    totalPermissions: 0,
+  });
+  const [mostEditedDocs, setMostEditedDocs] = useState([]);
+  const [mostActiveUsers, setMostActiveUsers] = useState([]);
+  const [documents, setDocuments] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"));
 
-    const currentUser = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    loadMetrics();
+  }, []);
 
-    async function handleShowDocuments() {
-        setShowDocs(true);
-        try {
-            const docs = await fetchDocumentsByUser();
-            const myDocs = Array.isArray(docs)
-                ? docs.filter(doc => doc.owner?.id === currentUser?.id)
-                : [];
-            setDocuments(myDocs);
-        } catch (err) {
-            console.error("Erro ao buscar documentos:", err);
-            setDocuments([]);
-        }
+  async function loadMetrics() {
+    try {
+      const [totalDocs, totalUsers, totalRevisions, totalPermissions] =
+        await Promise.all([
+          fetchTotalDocuments(),
+          fetchTotalUsers(),
+          fetchTotalRevisions(),
+          fetchTotalPermissions(),
+        ]);
+
+      setMetrics({
+        totalDocs,
+        totalUsers,
+        totalRevisions,
+        totalPermissions,
+      });
+
+      // Carrega documentos mais editados
+      const docs = await fetchMostEditedDocs();
+      const mappedDocs = docs.map(d => ({
+        title: d.title ?? "Sem título",
+        edits: d.editCount ?? 0
+      }));
+      setMostEditedDocs(mappedDocs);
+
+      const users = await fetchMostActiveUsers();
+      const mappedUsers = users.map(u => ({
+        username: u.username ?? "Sem nome",
+        createdDocs: u.createdDocs ?? 0,
+        editedDocs: u.editedDocs ?? 0,
+        totalActions: u.totalActions ?? 0
+      }));
+      setMostActiveUsers(mappedUsers);
+
+      // Carrega todos os documentos
+      const allDocuments = await fetchDocuments();
+      setDocuments(allDocuments);
+
+    } catch (err) {
+      console.error("Erro ao carregar métricas:", err);
     }
+  }
 
-    function openDeleteDialog(id) {
-        setDeleteDialog({ open: true, docId: id });
-    }
 
-    function closeDeleteDialog() {
-        setDeleteDialog({ open: false, docId: null });
-    }
+  // Colunas que você quer mostrar na tabela
+  const columns = [
+    { key: "title", title: "Título" },
+    { key: "lastEdited", title: "Última edição" },
+    { key: "username", title: "Usuário" },
+  ];
 
-    async function confirmDeleteDocument() {
-        const success = await deleteDocumentById(deleteDialog.docId);
-        if (success) {
-            setDocuments(documents.filter(doc => doc.id !== deleteDialog.docId));
-        }
-        closeDeleteDialog();
-    }
+  const tableData = documents.map(doc => ({
+    title: doc.title,
+    lastEdited: new Date(doc.updatedAt).toLocaleString(), // opcional: formata a data
+    username: doc.owner ?? "Sem dono",
+  }));
 
-    return (
-        <>
-            <div className="dashboard-title">
-                {showDocs ? (
-                    <div className="dashboard-header">
-                        <button className="back-btn" onClick={() => setShowDocs(false)}>⬅ Voltar</button>
-                        <span>Meus Documentos</span>
-                    </div>
-                ) : (
-                    "Painel Principal"
-                )}
-            </div>
+  return (
+    <div className="dashboard-container">
+      <h1>Bem - Vindo, {user?.username}! </h1>
 
-            <div className="dashboard-content">
-                {!showDocs ? (
-                    <div className="dashboard-cards">
-                        {/* Meus Documentos */}
-                        <div
-                            className="dashboard-card"
-                            style={{ borderColor: "var(--primary)", boxShadow: `0 2px 12px var(--primary)22` }}
-                            onClick={handleShowDocuments}
-                        >
-                            <div className="dashboard-card-icon" style={{ color: "var(--primary)" }}>📄</div>
-                            <div className="dashboard-card-title">Meus Documentos</div>
-                            <div className="dashboard-card-desc">Veja e edite seus documentos</div>
-                        </div>
+      {/* Cards de métricas */}
+      <div className="dashboard-metrics">
+        <div className="metric-card blue">
+          <h2>{metrics.totalDocs ?? 0}</h2>
+          <p>Documentos</p>
+        </div>
+        <div className="metric-card green">
+          <h2>{metrics.totalUsers ?? 0}</h2>
+          <p>Utilizadores</p>
+        </div>
+        <div className="metric-card blue-light">
+          <h2>{metrics.totalRevisions ?? 0}</h2>
+          <p>Revisões</p>
+        </div>
+        <div className="metric-card green-light">
+          <h2>{metrics.totalPermissions ?? 0}</h2>
+          <p>Permissões</p>
+        </div>
+      </div>
 
-                        {/* Novo Documento */}
-                        <div
-                            className="dashboard-card"
-                            style={{ borderColor: "var(--accent)", boxShadow: `0 2px 12px var(--accent)22` }}
-                            onClick={() => navigate("/editor/new")}
-                        >
-                            <div className="dashboard-card-icon" style={{ color: "var(--accent)" }}>➕</div>
-                            <div className="dashboard-card-title">Novo Documento</div>
-                            <div className="dashboard-card-desc">Crie um novo documento colaborativo</div>
-                        </div>
+      <div className="dashboard-charts-wrapper">
+        {/* Tabela de Documentos Mais Editados */}
+        <div className="dashboard-table-wrapper">
+          <h3>Documentos Mais Editados</h3>
+          {mostEditedDocs?.length > 0 ? (
+            <table className="documents-table">
+              <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Edições</th>
+                </tr>
+              </thead>
+              <tbody>
+                {mostEditedDocs.map((doc, index) => (
+                  <tr key={index}>
+                    <td>{doc.title}</td>
+                    <td>{doc.edits}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div>Nenhum documento encontrado.</div>
+          )}
+        </div>
+        <div className="dashboard-table-wrapper">
+          <h3>Utilizadores Mais Activos</h3>
+          {mostActiveUsers?.length > 0 ? (
+            <table className="documents-table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Documentos Criados</th>
+                  <th> Actualizados</th>
+                  <th>Número Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {mostActiveUsers.map((user, index) => (
+                  <tr key={index}>
+                    <td>{user.username}</td>
+                    <td>{user.createdDocs} documentos</td>
+                    <td>{user.editedDocs} Actualizações</td>
+                    <td>{user.totalActions} Actividades</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            
+          ) : (
+            <div>Nenhum documento encontrado.</div>
+          )}
+        </div>
+      </div>
+      {/* Tabela de histórico de documentos */}
+      <div className="dashboard-table-wrapper">
+        {documents?.length > 0 && (
+          <DocumentHistoryTable
+            title="Histórico de Documentos"
+            columns={columns}
+            data={tableData}
+            itemsPerPage={5}
+          />
+        )}
+      </div>
 
-                        {/* Histórico */}
-                        <div
-                            className="dashboard-card"
-                            style={{ borderColor: "var(--info)", boxShadow: `0 2px 12px var(--info)22` }}
-                            onClick={() => navigate("/history/:documentId")}
-                        >
-                            <div className="dashboard-card-icon" style={{ color: "var(--info)" }}>🕒</div>
-                            <div className="dashboard-card-title">Histórico</div>
-                            <div className="dashboard-card-desc">Veja alterações e atividades anteriores</div>
-                        </div>
 
-                        {/* Permissões */}
-                        <div
-                            className="dashboard-card"
-                            style={{ borderColor: "var(--warning)", boxShadow: `0 2px 12px var(--warning)22` }}
-                            onClick={() => navigate("/permissions")}
-                        >
-                            <div className="dashboard-card-icon" style={{ color: "var(--warning)" }}>🔑</div>
-                            <div className="dashboard-card-title">Permissões</div>
-                            <div className="dashboard-card-desc">Gerencie quem pode acessar seus documentos</div>
-                        </div>
-                    </div>
 
-                ) : (
-                    documents.length === 0 ? (
-                        <div>Nenhum documento encontrado</div>
-                    ) : (
-                        <DocumentHistoryTable
-                            data={documents}
-                            itemsPerPage={5}
-                            columns={[
-                                { title: "Título", key: "title" },
-                                { title: "Conteúdo", key: "content" },
-                                { title: "Proprietário", key: "owner", render: (doc) => doc.owner?.username || "Desconhecido" },
-                                {
-                                    title: "Data Criação",
-                                    key: "createdAt",
-                                    render: (doc) => {
-                                        const date = new Date(doc.createdAt);
-                                        const day = date.getDate().toString().padStart(2, "0");
-                                        const month = (date.getMonth() + 1).toString().padStart(2, "0");
-                                        const year = date.getFullYear();
-                                        const hours = date.getHours().toString().padStart(2, "0");
-                                        const minutes = date.getMinutes().toString().padStart(2, "0");
-                                        return `${day}/${month}/${year} ${hours}:${minutes}`;
-                                    },
-                                },
-                                {
-                                    title: "Data Actualização",
-                                    key: "updatedAt",
-                                    render: (doc) => {
-                                        const date = new Date(doc.updatedAt);
-                                        const day = date.getDate().toString().padStart(2, "0");
-                                        const month = (date.getMonth() + 1).toString().padStart(2, "0");
-                                        const year = date.getFullYear();
-                                        const hours = date.getHours().toString().padStart(2, "0");
-                                        const minutes = date.getMinutes().toString().padStart(2, "0");
-                                        return `${day}/${month}/${year} ${hours}:${minutes}`;
-                                    },
-                                },
-                                {
-                                    title: "Ações",
-                                    key: "actions",
-                                    render: (doc) => (
-                                        <>
-                                            <button className="btn-edit" onClick={() => navigate(`/editor/${doc.id}`)}>Editar</button>
-                                            <button className="btn-delete" onClick={() => openDeleteDialog(doc.id)}>Apagar</button>
-                                        </>
-                                    ),
-                                },
-                            ]}
-                        />
-                    )
-                )}
-            </div>
 
-            {deleteDialog.open && (
-                <div className="dialog-backdrop">
-                    <div className="dialog-box">
-                        <h3>Confirmar exclusão</h3>
-                        <p>Tem certeza que deseja apagar este documento?</p>
-                        <div className="dialog-actions">
-                            <button className="btn-confirm" onClick={confirmDeleteDocument}>Sim</button>
-                            <button className="btn-cancel" onClick={closeDeleteDialog}>Cancelar</button>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </>
-    );
+
+
+    </div>
+  );
 }

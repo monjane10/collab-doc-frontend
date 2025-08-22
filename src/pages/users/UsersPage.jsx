@@ -12,7 +12,7 @@ export default function UsersPage() {
     async function fetchUsers() {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:3000/users", {
+        const res = await axios.get("https://collab-docs-zn2l.onrender.com/users", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUsers(res.data);
@@ -31,7 +31,7 @@ export default function UsersPage() {
     if (!window.confirm("Tem certeza que deseja remover este utilizador?")) return;
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:3000/users/${id}`, {
+      await axios.delete(`https://collab-docs-zn2l.onrender.com/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(users.filter((u) => u.id !== id));

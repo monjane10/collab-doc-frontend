@@ -18,7 +18,7 @@ export default function DocumentsPage() {
   async function fetchDocuments() {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:3000/documents", {
+      const res = await axios.get("https://collab-docs-zn2l.onrender.com/documents", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDocuments(res.data);
@@ -51,7 +51,7 @@ export default function DocumentsPage() {
           : [],
       };
 
-      await axios.post("http://localhost:3000/documents", payload, {
+      await axios.post("https://collab-docs-zn2l.onrender.com/documents", payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -75,7 +75,7 @@ export default function DocumentsPage() {
     if (!window.confirm("Deseja realmente apagar este documento?")) return;
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:3000/documents/${id}`, {
+      await axios.delete(`https://collab-docs-zn2l.onrender.com/documents/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchDocuments();

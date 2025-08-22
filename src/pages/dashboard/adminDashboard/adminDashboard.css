@@ -55,6 +55,12 @@
   gap: 1rem; 
   flex-wrap: wrap; 
 }
+.metric-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5em;
+  color: #fff; /* ou var(--primary) se quiser cores consistentes */
+}
+
 
 .dashboard-chart {
   flex: 1; 

@@ -3,7 +3,7 @@ import axios from "axios";
 export async function fetchDocuments() {
   const token = localStorage.getItem("token");
   try {
-    const response = await axios.get("http://localhost:3000/documents", {
+    const response = await axios.get("https://collab-docs-zn2l.onrender.com/documents", {
       headers: { Authorization: `Bearer ${token}` }
     });
     console.log(response.data);
@@ -26,7 +26,7 @@ export async function fetchDocumentsByUser() {
   if (!user) return [];
 
   try {
-    const response = await axios.get("http://localhost:3000/documents", {
+    const response = await axios.get("https://collab-docs-zn2l.onrender.com/documents", {
       headers: { Authorization: `Bearer ${token}` },
       params: { ownerId: user.id } // envia userId como query param
     });
@@ -47,7 +47,7 @@ export async function deleteDocumentById(docId) {
   if (!docId) return false;
 
   try {
-    await axios.delete(`http://localhost:3000/documents/${docId}`, {
+    await axios.delete(`https://collab-docs-zn2l.onrender.com/documents/${docId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     return true; // sucesso
@@ -61,7 +61,7 @@ export async function fetchHistoryByUser(documentId) {
     try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-            `http://localhost:3000/revisions/${documentId}`,
+            `https://collab-docs-zn2l.onrender.com/revisions/${documentId}`,
             { headers: { Authorization: `Bearer ${token}` } }
         );
         console.log("Revisões obtidas:", response.data);

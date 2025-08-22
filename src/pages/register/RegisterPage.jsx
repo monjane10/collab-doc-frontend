@@ -18,7 +18,7 @@ export default function RegisterPage() {
     setError("");
     setSuccess("");
     try {
-      await axios.post("http://localhost:3000/users", {
+      await axios.post(" https://collab-docs-zn2l.onrender.com/users", {
         username,
         email,
         password

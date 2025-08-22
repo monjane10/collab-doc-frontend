@@ -30,6 +30,12 @@
     font-weight: 600;
 }
 
+.history-page h3 {
+  font-size: 1.5em;
+  text-align: center;
+  color: var(--primary);
+}
+
 .dashboard-content h2 {
     font-size: 1.8em;
     padding: 15px;

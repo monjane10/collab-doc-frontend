@@ -16,7 +16,7 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
     try {
-      const response = await axios.post("http://localhost:3000/login", {
+      const response = await axios.post("https://collab-docs-zn2l.onrender.com/login", {
         email,
         password
       });

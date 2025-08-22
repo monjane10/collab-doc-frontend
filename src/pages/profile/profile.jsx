@@ -21,7 +21,7 @@ export default function ProfilePage() {
         const user = JSON.parse(localStorage.getItem("user")); // pega id do logado
         if (!user?.id) throw new Error("Usuário não encontrado no localStorage");
 
-        const res = await axios.get(`http://localhost:3000/users/${user.id}`, {
+        const res = await axios.get(`https://collab-docs-zn2l.onrender.com/users/${user.id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -48,7 +48,7 @@ export default function ProfilePage() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.put(`http://localhost:3000/users/${form.id}`, form, {
+      await axios.put(`https://collab-docs-zn2l.onrender.com/users/${form.id}`, form, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

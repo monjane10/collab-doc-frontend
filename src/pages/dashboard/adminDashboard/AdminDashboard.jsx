@@ -21,6 +21,7 @@ export default function AdminDashboard() {
   const [mostEditedDocs, setMostEditedDocs] = useState([]);
   const [mostActiveUsers, setMostActiveUsers] = useState([]);
   const [documents, setDocuments] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     loadMetrics();
@@ -85,7 +86,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="dashboard-container">
-      <h1>Admin Dashboard</h1>
+      <h1>Bem - Vindo, {user?.username}!</h1>
 
       {/* Cards de métricas */}
       <div className="dashboard-metrics">

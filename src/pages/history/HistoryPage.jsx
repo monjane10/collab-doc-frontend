@@ -50,12 +50,12 @@ export default function HistoryPage() {
 
     return (
         <div className="history-page">
+            <h3>Documentos Revisados</h3>
             <div className="dashboard-content">
                 {documents.length === 0 ? (
                     <div>Nenhum documento encontrado</div>
                 ) : (
                     <DocumentHistoryTable
-                        title="Histórico de Documentos"
                         data={documents}
                         columns={[
                             {

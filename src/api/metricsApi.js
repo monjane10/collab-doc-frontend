@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = "http://localhost:3000/metrics";
+const API_BASE = "https://collab-docs-zn2l.onrender.com/metrics";
 
 // Total de documentos
 export async function fetchTotalDocuments() {
