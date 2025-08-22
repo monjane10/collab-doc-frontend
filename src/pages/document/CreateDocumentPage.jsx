@@ -19,7 +19,7 @@ export default function DocumentsPage() {
   async function fetchDocuments() {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get( `https://collab-docs-zn2l.onrender.com/documents/user/${user.id}`, {
+      const res = await axios.get( `https://collab-docs-zn2l.onrender.com/documents/user${user.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDocuments(res.data);
