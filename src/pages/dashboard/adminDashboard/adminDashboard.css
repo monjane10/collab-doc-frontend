@@ -91,3 +91,83 @@
   color: #4a90e2;
   padding: 10px;
 }
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+
+  .dashboard-container h1 {
+    font-size: 1.5rem;
+    padding: 10px;
+  }
+
+  /* Cards de métricas ficam 1 coluna */
+  .dashboard-metrics {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .metric-card {
+    padding: 1rem;
+  }
+
+  .metric-card h2 {
+    font-size: 1.5rem;
+  }
+  .metric-card p {
+    font-size: 0.9rem;
+  }
+
+  /* Wrapper dos gráficos empilha no mobile */
+  .dashboard-charts-wrapper {
+    flex-direction: column;
+  }
+
+  .dashboard-chart {
+    min-width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.8rem;
+  }
+
+  .dashboard-chart h3 {
+    font-size: 1.2rem;
+  }
+
+  /* Tabela com scroll horizontal se necessário */
+  .dashboard-table-wrapper {
+    max-height: 200px;
+    overflow-x: auto;
+  }
+
+  .dashboard-table-wrapper h3 {
+    font-size: 1.2rem;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 0.8rem;
+  }
+
+  .dashboard-container h1 {
+    font-size: 1.3rem;
+    padding: 8px;
+  }
+
+  .metric-card h2 {
+    font-size: 1.3rem;
+  }
+
+  .metric-card p {
+    font-size: 0.85rem;
+  }
+
+  .dashboard-chart h3 {
+    font-size: 1rem;
+  }
+
+  .dashboard-charts-wrapper {
+    gap: 0.5rem;
+  }
+}

@@ -234,3 +234,32 @@
   border-color: var(--primary);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
 }
+@media (max-width: 768px) {
+  .layout-content.shifted {
+    margin-left: 240px; /* mesma largura da sidebar */
+    transition: margin-left 0.3s ease;
+  }
+}
+@media (max-width: 768px) {
+  .search-wrapper {
+    display: none; /* esconde a barra de pesquisa em telas pequenas */
+  }
+
+  .system-title {
+    font-size: 1.1rem;
+    margin-right: 1rem;
+  }
+}
+@media (max-width: 768px) {
+  .avatar-menu {
+    right: 1rem;
+    top: 50px;
+    min-width: 160px; /* reduz largura para telas pequenas */
+  }
+}
+@media (max-width: 480px) {
+  .layout-main {
+    margin: 0.5rem;
+    padding: 0.5rem;
+  }
+}
