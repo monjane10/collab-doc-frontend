@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { fetchDocumentsByUser, fetchHistoryByUser } from "../../api/documentsApi.js";
 import "./history.css";
 import DocumentHistoryTable from "../../components/table/tabela.jsx";
+import { AiOutlineClose } from "react-icons/ai";
+
 
 export default function HistoryPage() {
     const [documents, setDocuments] = useState([]);
@@ -10,7 +12,7 @@ export default function HistoryPage() {
     const [loadingDocs, setLoadingDocs] = useState(true);
     const [loadingHistory, setLoadingHistory] = useState(false);
 
-    // Carregar documentos do usuário logado
+    // Carregar documentos do usuário
     useEffect(() => {
         async function loadDocuments() {
             try {
@@ -25,7 +27,7 @@ export default function HistoryPage() {
         loadDocuments();
     }, []);
 
-    // Carregar histórico do documento selecionado
+    // Carregar histórico ao selecionar documento
     useEffect(() => {
         if (!selectedDoc) return;
 
@@ -47,51 +49,79 @@ export default function HistoryPage() {
     if (loadingDocs) return <div>Carregando documentos...</div>;
 
     return (
-        <>
-        
-       
+        <div className="history-page">
             <div className="dashboard-content">
-      
-                <h2>Historico de Revisoes</h2>
                 {documents.length === 0 ? (
                     <div>Nenhum documento encontrado</div>
                 ) : (
-                    <ul className="document-list">
-                        {documents.map(doc => (
-                            <li key={doc.id}>
-                                <button onClick={() => setSelectedDoc(doc)}>
-                                    {doc.title}
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
+                    <DocumentHistoryTable
+                        title="Histórico de Documentos"
+                        data={documents}
+                        columns={[
+                            {
+                                title: "Título",
+                                key: "title",
+                                render: row => (
+                                    <span
+                                        onClick={() => setSelectedDoc(row)}
+                                        style={{ cursor: "pointer" }}
+                                    >
+                                        {row.title}
+                                    </span>
+                                )
+                            },
+                            {
+                                title: "Última Edição",
+                                key: "updatedAt",
+                                render: row => (
+                                    <span
+                                        onClick={() => setSelectedDoc(row)}
+                                        style={{ cursor: "pointer" }}
+                                    >
+                                        {new Date(row.updatedAt).toLocaleString()}
+                                    </span>
+                                )
+                            }
+                        ]}
+                    />
                 )}
 
-                
-
                 {selectedDoc && (
-                    <div className="document-history">
-                        <h3>Histórico de revisao do documento: {selectedDoc.title}</h3>
-
-                        {loadingHistory ? (
-                            <div>Carregando histórico...</div>
-                        ) : history.length === 0 ? (
-                            <div>Nenhuma atividade encontrada</div>
-                        ) : (
-                            <DocumentHistoryTable
-                                data={history} // passar todos os itens
-                                columns={[
-                                    { title: "Editor", key: "user", render: row => row.editor?.username || "Desconhecido" },
-                                    { title: "Data", key: "createdAt", render: row => new Date(row.createdAt).toLocaleString() },
-                                ]}
-                                itemsPerPage={5} // opcional, default = 5
+                    <>
+                        <div className="overlay-backdrop" onClick={() => setSelectedDoc(null)} />
+                        <div className="document-overlay">
+                            <AiOutlineClose
+                                className="close-icon"
+                                onClick={() => setSelectedDoc(null)}
                             />
-                        )}
-                    </div>
+                            {loadingHistory ? (
+                                <div>Carregando histórico...</div>
+                            ) : history.length === 0 ? (
+                                <div>Nenhuma atividade encontrada</div>
+                            ) : (
+                                <DocumentHistoryTable
+                                    title={selectedDoc.title}
+                                    data={history}
+                                    columns={[
+                                        {
+                                            title: "Editor",
+                                            key: "user",
+                                            render: row => row.editor?.username || "Desconhecido"
+                                        },
+                                        {
+                                            title: "Data",
+                                            key: "createdAt",
+                                            render: row => new Date(row.createdAt).toLocaleString()
+                                        }
+                                    ]}
+                                    itemsPerPage={5}
+                                />
+                            )}
+                        </div>
+                    </>
                 )}
 
             </div>
-            </>
-       
+        </div>
     );
 }

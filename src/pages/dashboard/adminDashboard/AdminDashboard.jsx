@@ -139,22 +139,23 @@ export default function AdminDashboard() {
               <thead>
                 <tr>
                   <th>Nome</th>
-                  <th>Documentos criados</th>
-                  <th> Documentos Actualizados</th>
-                  <th>Total</th>
+                  <th>Documentos Criados</th>
+                  <th> Actualizados</th>
+                  <th>Número Total</th>
                 </tr>
               </thead>
               <tbody>
                 {mostActiveUsers.map((user, index) => (
                   <tr key={index}>
                     <td>{user.username}</td>
-                    <td>{user.createdDocs}</td>
-                    <td>{user.editedDocs}</td>
-                    <td>{user.totalActions}</td>
+                    <td>{user.createdDocs} documentos</td>
+                    <td>{user.editedDocs} Actualizações</td>
+                    <td>{user.totalActions} Actividades</td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            
           ) : (
             <div>Nenhum documento encontrado.</div>
           )}
